@@ -19,37 +19,40 @@ export default class App extends React.Component {
     error: undefined
   }
 
-  getWeather = async (e) => {
+  getWeather =  (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
-    const api_call = await fetch(`http://api.weatherstack.com/current?access_key=${API_KEY}&query=${city}`);
-    const data = await api_call.json();
-    if(city) {
-      this.setState({
-        temperature: data.current.temperature,
-        location: data.location.name,
-        humidity: data.current.humidity,
-        precip: data.current.precip,
-        icon: data.current.weather_icons,
-        description: data.current.weather_descriptions,
-        wind: data.current.wind_speed,
-        time: data.location.localtime,
-        error: ""
+    fetch(`http://api.weatherstack.com/current?access_key=${API_KEY}&query=${city}`).then((response) => {
+      response.json().then((data) => {
+          if(data.error) {
+            this.setState({
+              temperature: undefined,
+              location: undefined,
+              humidity: undefined,
+              precip: undefined,
+              icon: undefined,
+              wind: undefined,
+              description: undefined,
+              time: undefined,
+              error: data.error.info
+            })
+          } else if(city) {
+            this.setState({
+              temperature: data.current.temperature,
+              location: data.location.name,
+              humidity: data.current.humidity,
+              precip: data.current.precip,
+              icon: data.current.weather_icons,
+              description: data.current.weather_descriptions,
+              wind: data.current.wind_speed,
+              time: data.location.localtime,
+              error: ""
+            })
+          }
       })
-    } else {
-      this.setState({
-        temperature: undefined,
-        location: undefined,
-        humidity: undefined,
-        precip: undefined,
-        icon: undefined,
-        wind: undefined,
-        description: undefined,
-        time: undefined,
-        error: 'please enter the values'
-      })
-    }
+    })
   }
+  
   render() {
     return (
       <div className="container">
