@@ -1,9 +1,9 @@
 import React from 'react';
 import '../App.css'
 
-const Form = (props) => {
+const Form = ({onSubmit}) => {
     return (
-        <form onSubmit={props.getWeather}>
+        <form onSubmit={onSubmit}>
             <input type="text" name="city" placeholder="City.."/>
             <button>Serach!</button>
         </form>
