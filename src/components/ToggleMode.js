@@ -6,8 +6,8 @@ const ToggleMode = ({style, onClick}) => {
         <div className="toggle-container">
             <div 
                 style = {style}
-                onClick={onClick} 
-                className="toggle">
+                onClick ={onClick} 
+                className = "toggle">
             </div>
         </div>
     )

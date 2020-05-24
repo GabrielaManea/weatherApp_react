@@ -3,7 +3,7 @@ import './../App.css';
 
 const Weather = ({location, time, icon, temperature, humidity, precip, wind, description, error}) => {
     return (
-         <div className="weather-container">
+         <div className ="weather-container">
             <div className="card-section">
                 <div className="card-desc">
                     {location && <h2 className="location">{location}</h2>}

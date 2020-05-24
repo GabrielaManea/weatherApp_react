@@ -67,7 +67,6 @@ export default class App extends React.Component {
       newRotation = -180;
     }
 
-
     this.setState({
       rotation: newRotation,
       darkMode: !this.state.darkMode
@@ -78,14 +77,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className= {`app ${this.state.darkMode ? "dark-mode" : ""} `}>
-        {/* <ToggleMode style={this.style} onClick={this.onClick} /> */}
-        <div className="toggle-container">
-            <div 
-                style = {{transform: `rotate(${this.state.rotation}deg)`, transitionDuration: "0.2s" } }
-                onClick={this.onClick} 
-                className="toggle">
-            </div>
-        </div>
+        <ToggleMode style = {{transform: `rotate(${this.state.rotation}deg)`, transitionDuration: "0.2s"}} onClick={this.onClick} />
         <div className="container">
           <Title></Title>
           <Form onSubmit={this.onSubmit} />
