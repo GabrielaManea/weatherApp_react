@@ -3,6 +3,7 @@ import './App.css';
 import Title from './components/Title';
 import Form from './components/Form'
 import Weather from './components/Weather';
+import ToggleMode from './components/ToggleMode';
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
@@ -16,8 +17,10 @@ export default class App extends React.Component {
     description: '',
     wind: '',
     time: '',
-    error: ''
-  }
+    error: '',
+    rotation: 0,
+    darkMode: false
+    }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -52,17 +55,44 @@ export default class App extends React.Component {
           description: '',
           wind: '',
           time: '',
-          error: "Something went wrong. Please refresh and try again"
+          error: "Something went wrong. Please refresh and try again!"
         })
       })
   }
+
+  onClick = (e) => {
+    e.preventDefault();
+    let newRotation = this.state.rotation + 180;
+    if(newRotation === 180){
+      newRotation = -180;
+    }
+
+
+    this.setState({
+      rotation: newRotation,
+      darkMode: !this.state.darkMode
+    })
+  }
+
+
   render() {
     return (
-      <div className="container">
-        <Title></Title>
-        <Form onSubmit={this.onSubmit} />
-        <Weather {...this.state}/>
+      <div className= {`app ${this.state.darkMode ? "dark-mode" : ""} `}>
+        {/* <ToggleMode style={this.style} onClick={this.onClick} /> */}
+        <div className="toggle-container">
+            <div 
+                style = {{transform: `rotate(${this.state.rotation}deg)`, transitionDuration: "0.2s" } }
+                onClick={this.onClick} 
+                className="toggle">
+            </div>
+        </div>
+        <div className="container">
+          <Title></Title>
+          <Form onSubmit={this.onSubmit} />
+          <Weather {...this.state}/>
+        </div>
       </div>
+      
     );
   }
 }
